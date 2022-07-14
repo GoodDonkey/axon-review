@@ -1,1 +1,5 @@
 rootProject.name = 'mileage-project'
+
+include("review")
+include("point")
+include("core")
