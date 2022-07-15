@@ -1,4 +1,4 @@
-package com.mileage.review;
+package com.mileage;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
