@@ -1,7 +1,10 @@
 package com.mileage.review.aggregate;
 
+import com.mileage.core.events.ReviewModified;
 import com.mileage.core.events.ReviewSaved;
 import com.mileage.review.command.AddReviewCommand;
+import com.mileage.review.command.DeleteReviewCommand;
+import com.mileage.review.command.ModifyReviewCommand;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -49,6 +52,29 @@ public class Review {
                          .photoIds(command.getPhotoIds())
                          .userId(command.getUserId())
                          .build());
+    }
+    
+    @CommandHandler
+    public void handle(ModifyReviewCommand command) {
+        log.debug("handling command: {}", command);
+        // 변경 내용에 따라 서로 다른 이벤트를 발행한다.
+        apply(ReviewModified.builder()
+                            .reviewId(command.getReviewId())
+                            .content(command.getContent())
+                            .photoIds(command.getPhotoIds()));
+    }
+    
+    @CommandHandler
+    public void handle(DeleteReviewCommand command) {
+        log.debug("handling command: {}", command);
+        // 리뷰를 지움
+        // 리뷰의 내용에 따라 여러 이벤트를 발행한다.
+    }
+    
+    @EventSourcingHandler
+    public void on(ReviewModified event) {
+        this.content = content;
+        this.photos = event.getPhotoIds().stream().map(Photo::new).collect(Collectors.toList());
     }
     
     @EventSourcingHandler
