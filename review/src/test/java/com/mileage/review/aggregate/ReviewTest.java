@@ -1,9 +1,13 @@
 package com.mileage.review.aggregate;
 
+import com.mileage.core.events.ReviewAddingRequested;
 import com.mileage.core.events.ReviewSaved;
 import com.mileage.review.command.AddReviewCommand;
+import com.mileage.review.command.ReviewAddingSaga;
+import com.mileage.review.command.SaveReviewCommand;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
+import org.axonframework.test.saga.SagaTestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +17,7 @@ import java.util.UUID;
 class ReviewTest {
     
     private final FixtureConfiguration<Review> testFixture = new AggregateTestFixture<>(Review.class);
+    
     
     private static final String reviewId = UUID.randomUUID().toString();
     private static final String content = "some content";
@@ -29,6 +34,26 @@ class ReviewTest {
         testFixture.givenNoPriorActivity()
                    .when(new AddReviewCommand(reviewId, content, photoIds, placeId, userId))
                    .expectSuccessfulHandlerExecution()
-                   .expectEvents(new ReviewSaved(reviewId, content, photoIds, placeId, userId));
+                   .expectEvents(ReviewAddingRequested.builder()
+                                                      .reviewId(reviewId)
+                                                      .content(content)
+                                                      .photoIds(photoIds)
+                                                      .placeId( placeId)
+                                                      .userId(userId).build());
+    }
+    
+    @Test
+    @DisplayName("test02")
+    void test02() {
+        ReviewAddingRequested reviewAddingRequested = ReviewAddingRequested.builder().reviewId(reviewId).content(content)
+                                                           .placeId(placeId).userId(userId).photoIds(photoIds).build();
+    
+        SaveReviewCommand saveReviewCommand = SaveReviewCommand.builder().reviewId(reviewId).build();
+    
+        ReviewSaved reviewSaved = ReviewSaved.builder().reviewId(reviewId).build();
+        testFixture.given(reviewAddingRequested)
+                   .when(saveReviewCommand)
+                   .expectSuccessfulHandlerExecution()
+                   .expectEvents(reviewSaved);
     }
 }

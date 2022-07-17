@@ -1,10 +1,10 @@
 package com.mileage.review.aggregate;
 
+import com.mileage.core.events.ReviewAddingRequested;
+import com.mileage.core.events.ReviewIsFirstOnPlace;
 import com.mileage.core.events.ReviewModified;
 import com.mileage.core.events.ReviewSaved;
-import com.mileage.review.command.AddReviewCommand;
-import com.mileage.review.command.DeleteReviewCommand;
-import com.mileage.review.command.ModifyReviewCommand;
+import com.mileage.review.command.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,6 +34,8 @@ public class Review {
     private String content;
     private String placeId;
     private String userId;
+    private FirstOnPlaceReview isFirstOnPlace;
+    private ReviewStatus reviewStatus;
     
     @AggregateMember
     private List<Photo> photos = new ArrayList<>();
@@ -45,13 +47,53 @@ public class Review {
     
     public void handle(AddReviewCommand command) {
         log.debug("handling command: {}", command);
-        apply(ReviewSaved.builder()
-                         .reviewId(command.getReviewId())
-                         .placeId(command.getPlaceId())
-                         .content(command.getContent())
-                         .photoIds(command.getPhotoIds())
-                         .userId(command.getUserId())
-                         .build());
+        String reviewId = command.getReviewId();
+        String content = command.getContent();
+        String placeId = command.getPlaceId();
+        String userId = command.getUserId();
+        List<String> photoIds = command.getPhotoIds();
+    
+        ReviewAddingRequested event = ReviewAddingRequested.builder().reviewId(reviewId).content(content)
+                                                           .placeId(placeId).userId(userId).photoIds(photoIds).build();
+        apply(event);
+    }
+    
+    @EventSourcingHandler
+    public void on(ReviewAddingRequested event) {
+        log.debug("event sourcing: {}", event);
+        this.reviewId = event.getReviewId();
+        this.placeId = event.getPlaceId();
+        this.userId = event.getUserId();
+        this.content = event.getContent();
+        this.photos = event.getPhotoIds().stream().map(Photo::new).collect(Collectors.toList());
+        this.isFirstOnPlace = FirstOnPlaceReview.Processing; // Saga 를 통해 업데이트된다.
+        this.reviewStatus = ReviewStatus.Processing;
+    }
+    
+    @CommandHandler
+    public void handle(SaveReviewCommand command) {
+        log.debug("handling command: {}", command);
+        if (ReviewStatus.Processing.equals(this.reviewStatus)) {
+            ReviewSaved event = ReviewSaved.builder().reviewId(command.getReviewId()).build();
+            apply(event);
+        } else {
+            throw new IllegalStateException("처리되고 있는 리뷰가 아닙니다.");
+        }
+    }
+    
+    @EventSourcingHandler
+    public void on(ReviewSaved event) {
+        log.debug("event sourcing: {}", event);
+        this.reviewStatus = ReviewStatus.Saved;
+    }
+    
+    @EventSourcingHandler
+    public void on(ReviewIsFirstOnPlace event) {
+        if (!FirstOnPlaceReview.True.equals(this.isFirstOnPlace)) {
+            this.isFirstOnPlace = FirstOnPlaceReview.True;
+        } else {
+            throw new IllegalStateException("이미 첫번째 리뷰 입니다.");
+        }
     }
     
     @CommandHandler
@@ -73,17 +115,15 @@ public class Review {
     
     @EventSourcingHandler
     public void on(ReviewModified event) {
-        this.content = content;
+        this.content = event.getContent();
         this.photos = event.getPhotoIds().stream().map(Photo::new).collect(Collectors.toList());
     }
     
-    @EventSourcingHandler
-    public void on(ReviewSaved event) {
-        log.debug("event: {}", event);
-        this.reviewId = event.getReviewId();
-        this.content = event.getContent();
-        this.placeId = event.getPlaceId();
-        this.userId = event.getUserId();
-        this.photos = event.getPhotoIds().stream().map(Photo::new).collect(Collectors.toList());
+    private enum ReviewStatus {
+        Processing, Saved, Rejected
+    }
+    
+    private enum FirstOnPlaceReview {
+        Processing, True, False
     }
 }
