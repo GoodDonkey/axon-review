@@ -1,5 +1,6 @@
 package com.mileage.review.web;
 
+import com.mileage.place.CreatePlaceCommand;
 import com.mileage.review.command.AddReviewCommand;
 import com.mileage.review.command.DeleteReviewCommand;
 import com.mileage.review.command.ModifyReviewCommand;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -31,11 +33,20 @@ public class SpringReviewService implements ReviewService{
     
     @Override
     public CompletableFuture<String> addReview(ReviewRequestDTO dto) {
-        AddReviewCommand command = new AddReviewCommand(dto.getReviewId(),
-                                                         dto.getContent(),
-                                                         dto.getAttachedPhotoIds(),
-                                                         dto.getPlaceId(),
-                                                         dto.getUserId());
+        String reviewId = dto.getReviewId();
+        String content = dto.getContent();
+        String placeId = dto.getPlaceId();
+        String userId = dto.getUserId();
+        List<String> photoIds = dto.getAttachedPhotoIds();
+        
+        // 임시로 처리
+        commandGateway.sendAndWait(new CreatePlaceCommand(placeId));
+        AddReviewCommand command = AddReviewCommand.builder()
+                                                   .reviewId(reviewId)
+                                                   .content(content)
+                                                   .userId(userId)
+                                                   .placeId(placeId)
+                                                   .photoIds(photoIds).build();
         return commandGateway.send(command);
     }
 }
