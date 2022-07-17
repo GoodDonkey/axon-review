@@ -74,7 +74,14 @@ public class Review {
     public void handle(SaveReviewCommand command) {
         log.debug("handling command: {}", command);
         if (ReviewStatus.Processing.equals(this.reviewStatus)) {
-            ReviewSaved event = ReviewSaved.builder().reviewId(command.getReviewId()).build();
+            ReviewSaved event = ReviewSaved.builder()
+                                           .reviewId(command.getReviewId())
+                                           .content(content)
+                                           .placeId(placeId)
+                                           .userId(userId)
+                                           .photoIds(photos.stream().map(Photo::getPhotoId).collect(Collectors.toList()))
+                                           .isFirstOnPlace(isFirstOnPlace.value)
+                                           .build();
             apply(event);
         } else {
             throw new IllegalStateException("처리되고 있는 리뷰가 아닙니다.");
@@ -124,6 +131,12 @@ public class Review {
     }
     
     private enum FirstOnPlaceReview {
-        Processing, True, False
+        Processing(false), True(true), False(false);
+        
+        private boolean value;
+    
+        FirstOnPlaceReview(boolean value) {
+            this.value = value;
+        }
     }
 }
