@@ -1,0 +1,9 @@
+
+axon:
+  serializer:
+    general: jackson
+  axonserver:
+    servers: localhost:8124
+spring:
+  jpa:
+    show-sql: true
