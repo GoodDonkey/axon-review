@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/mileage_review
+    url: jdbc:mysql://localhost:3306/mileage_review_query
     username: root
     password: admin
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -12,6 +12,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+axon:
+  serializer:
+    general: jackson
+  axonserver:
+    servers: localhost:8124
 
 logging:
   level:

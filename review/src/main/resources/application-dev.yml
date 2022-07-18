@@ -13,6 +13,12 @@ spring:
       ddl-auto: update
     show-sql: true
 
+axon:
+  serializer:
+    general: jackson
+  axonserver:
+    servers: localhost:8124
+
 logging:
   level:
     com:
