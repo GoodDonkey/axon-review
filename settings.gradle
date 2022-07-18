@@ -3,3 +3,4 @@ rootProject.name = 'mileage-project'
 include("review")
 include("point")
 include("core")
+include("review-query")

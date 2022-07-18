@@ -62,3 +62,9 @@ project(':point') {
         implementation project(':core')
     }
 }
+
+project(':review-query') {
+    dependencies {
+        implementation project(':core')
+    }
+}
