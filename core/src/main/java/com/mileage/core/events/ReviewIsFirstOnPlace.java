@@ -1,10 +1,11 @@
 package com.mileage.core.events;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Builder@Data@AllArgsConstructor
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReviewIsFirstOnPlace {
     private String placeId;
     private String reviewId;
