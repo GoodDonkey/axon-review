@@ -1,6 +1,7 @@
-package com.mileage.user;
+package com.mileage.user.aggregate;
 
 import com.mileage.core.events.user.UserCreated;
+import com.mileage.user.aggregate.command.CreateUserCommand;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

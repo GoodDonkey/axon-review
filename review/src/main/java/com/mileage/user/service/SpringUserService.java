@@ -1,5 +1,6 @@
-package com.mileage.user;
+package com.mileage.user.service;
 
+import com.mileage.user.aggregate.command.CreateUserCommand;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.stereotype.Service;

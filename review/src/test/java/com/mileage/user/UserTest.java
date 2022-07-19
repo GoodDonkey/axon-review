@@ -1,6 +1,8 @@
 package com.mileage.user;
 
 import com.mileage.core.events.user.UserCreated;
+import com.mileage.user.aggregate.User;
+import com.mileage.user.aggregate.command.CreateUserCommand;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.DisplayName;
