@@ -2,8 +2,8 @@ package com.mileage.review.aggregate;
 
 import com.mileage.core.events.review.ReviewAddingRequested;
 import com.mileage.core.events.review.ReviewSaved;
-import com.mileage.review.command.AddReviewCommand;
-import com.mileage.review.command.SaveReviewCommand;
+import com.mileage.review.aggregate.command.AddReviewCommand;
+import com.mileage.review.aggregate.command.SaveReviewCommand;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.DisplayName;

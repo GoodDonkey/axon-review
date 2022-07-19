@@ -1,4 +1,4 @@
-package com.mileage.review.command;
+package com.mileage.review.aggregate.command;
 
 import com.mileage.core.events.review.ReviewAddingRequested;
 import com.mileage.core.events.review.ReviewIsFirstOnPlace;

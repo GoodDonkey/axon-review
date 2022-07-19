@@ -1,8 +1,9 @@
-package com.mileage.review.web;
+package com.mileage.review.service;
 
-import com.mileage.review.command.AddReviewCommand;
-import com.mileage.review.command.DeleteReviewCommand;
-import com.mileage.review.command.ModifyReviewCommand;
+import com.mileage.review.aggregate.command.AddReviewCommand;
+import com.mileage.review.aggregate.command.DeleteReviewCommand;
+import com.mileage.review.aggregate.command.ModifyReviewCommand;
+import com.mileage.review.web.ReviewRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.stereotype.Service;

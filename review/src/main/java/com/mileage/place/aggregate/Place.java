@@ -6,7 +6,7 @@ import com.mileage.core.events.place.PlaceCreated;
 import com.mileage.core.events.review.ReviewIsNotFirstOnPlace;
 import com.mileage.place.aggregate.command.AddReviewOnPlaceCommand;
 import com.mileage.place.aggregate.command.CreatePlaceCommand;
-import com.mileage.review.command.CheckReviewIsFirstOnPlaceCommand;
+import com.mileage.place.aggregate.command.CheckReviewIsFirstOnPlaceCommand;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

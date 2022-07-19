@@ -1,7 +1,7 @@
 package com.mileage.review.aggregate;
 
 import com.mileage.core.events.review.*;
-import com.mileage.review.command.*;
+import com.mileage.review.aggregate.command.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

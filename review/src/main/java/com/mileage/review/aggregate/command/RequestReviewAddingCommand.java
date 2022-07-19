@@ -1,16 +1,15 @@
-package com.mileage.review.command;
+package com.mileage.review.aggregate.command;
 
 import lombok.*;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Getter
-@EqualsAndHashCode
 @Builder
-public class AddReviewCommand {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class RequestReviewAddingCommand {
     @TargetAggregateIdentifier
     private String reviewId;
     private String content;
