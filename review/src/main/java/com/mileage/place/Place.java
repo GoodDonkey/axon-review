@@ -1,7 +1,10 @@
 package com.mileage.place;
 
+import com.mileage.core.events.place.ReviewAddedOnPlace;
 import com.mileage.core.events.review.ReviewIsFirstOnPlace;
 import com.mileage.core.events.place.PlaceCreated;
+import com.mileage.core.events.review.ReviewIsNotFirstOnPlace;
+import com.mileage.core.events.review.ReviewSaved;
 import com.mileage.review.command.CheckReviewIsFirstOnPlaceCommand;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -45,11 +48,29 @@ public class Place {
         String reviewId = command.getReviewId();
         String placeId = command.getPlaceId();
         if (reviewIds.isEmpty()){
-            apply(ReviewIsFirstOnPlace.builder()
-                                      .reviewId(reviewId)
-                                      .placeId(placeId)
-                                      .build());
-            log.debug("ReviewIsFirstOnPlace published: {}", placeId);
+            ReviewIsFirstOnPlace event = ReviewIsFirstOnPlace.builder().reviewId(reviewId).placeId(placeId).build();
+            apply(event);
+            log.debug("ReviewIsFirstOnPlace published: {}", event);
+        } else {
+            ReviewIsNotFirstOnPlace event = ReviewIsNotFirstOnPlace.builder().reviewId(reviewId).placeId(placeId)
+                                                                   .build();
+            apply(event);
+            log.debug("ReviewIsNotFirstOnPlace published: {}", event);
         }
+    }
+    
+    @CommandHandler
+    public void handle(AddReviewOnPlaceCommand command) {
+        log.debug("handling command: {}", command);
+        String reviewId = command.getReviewId();
+        String placeId = command.getPlaceId();
+        ReviewAddedOnPlace event = ReviewAddedOnPlace.builder().reviewId(reviewId).placeId(placeId).build();
+        apply(event);
+    }
+    
+    @EventSourcingHandler
+    public void on(ReviewAddedOnPlace event) {
+        log.debug("event sourcing: {}", event);
+        this.reviewIds.add(event.getReviewId());
     }
 }

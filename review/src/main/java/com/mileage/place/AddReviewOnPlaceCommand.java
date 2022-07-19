@@ -1,14 +1,14 @@
-package com.mileage.review.command;
+package com.mileage.place;
 
 import lombok.*;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
+@Builder
 @Data
 @AllArgsConstructor
-@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class SaveReviewCommand {
+public class AddReviewOnPlaceCommand {
     @TargetAggregateIdentifier
+    private String placeId;
     private String reviewId;
-    private boolean isFirstOnPlace;
 }

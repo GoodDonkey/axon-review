@@ -2,7 +2,9 @@ package com.mileage.review.command;
 
 import com.mileage.core.events.review.ReviewAddingRequested;
 import com.mileage.core.events.review.ReviewIsFirstOnPlace;
+import com.mileage.core.events.review.ReviewIsNotFirstOnPlace;
 import com.mileage.core.events.review.ReviewSaved;
+import com.mileage.place.AddReviewOnPlaceCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.EndSaga;
@@ -52,9 +54,26 @@ public class ReviewAddingSaga {
         this.firstOnPlaceProcessed = true;
         log.debug("handling event: {}", event);
         String reviewId = event.getReviewId();
+        String placeId = event.getPlaceId();
         if (!reviewSaved) {
-            SaveReviewCommand command = SaveReviewCommand.builder().reviewId(reviewId).build();
-            commandGateway.send(command);
+            SaveReviewCommand reviewCommand = SaveReviewCommand.builder().reviewId(reviewId).isFirstOnPlace(true).build();
+            AddReviewOnPlaceCommand placeCommand = AddReviewOnPlaceCommand.builder().placeId(placeId).reviewId(reviewId).build();
+            commandGateway.send(reviewCommand);
+            commandGateway.send(placeCommand);
+        }
+    }
+    
+    @SagaEventHandler(associationProperty = "placeId")
+    public void on(ReviewIsNotFirstOnPlace event) {
+        this.firstOnPlaceProcessed = true;
+        log.debug("handling event: {}", event);
+        String reviewId = event.getReviewId();
+        String placeId = event.getPlaceId();
+        if (!reviewSaved) {
+            SaveReviewCommand reviewCommand = SaveReviewCommand.builder().reviewId(reviewId).isFirstOnPlace(false).build();
+            AddReviewOnPlaceCommand placeCommand = AddReviewOnPlaceCommand.builder().placeId(placeId).reviewId(reviewId).build();
+            commandGateway.send(reviewCommand);
+            commandGateway.send(placeCommand);
         }
     }
     

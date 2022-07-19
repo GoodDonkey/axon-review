@@ -1,9 +1,6 @@
 package com.mileage.review.aggregate;
 
-import com.mileage.core.events.review.ReviewAddingRequested;
-import com.mileage.core.events.review.ReviewIsFirstOnPlace;
-import com.mileage.core.events.review.ReviewModified;
-import com.mileage.core.events.review.ReviewSaved;
+import com.mileage.core.events.review.*;
 import com.mileage.review.command.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -80,7 +77,7 @@ public class Review {
                                            .placeId(placeId)
                                            .userId(userId)
                                            .photoIds(photos.stream().map(Photo::getPhotoId).collect(Collectors.toList()))
-                                           .isFirstOnPlace(isFirstOnPlace.value)
+                                           .isFirstOnPlace(command.isFirstOnPlace())
                                            .build();
             apply(event);
         } else {
@@ -92,14 +89,10 @@ public class Review {
     public void on(ReviewSaved event) {
         log.debug("event sourcing: {}", event);
         this.reviewStatus = ReviewStatus.Saved;
-    }
-    
-    @EventSourcingHandler
-    public void on(ReviewIsFirstOnPlace event) {
-        if (!FirstOnPlaceReview.True.equals(this.isFirstOnPlace)) {
+        if (event.isFirstOnPlace()) {
             this.isFirstOnPlace = FirstOnPlaceReview.True;
         } else {
-            throw new IllegalStateException("이미 첫번째 리뷰 입니다.");
+            this.isFirstOnPlace = FirstOnPlaceReview.False;
         }
     }
     

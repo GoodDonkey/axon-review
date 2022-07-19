@@ -47,14 +47,13 @@ class ReviewAddingSagaTest {
                        .whenAggregate(placeId)
                        .publishes(new ReviewIsFirstOnPlace(placeId, reviewId))
                        .expectAssociationWith("placeId", placeId)
-                       .expectDispatchedCommands(new SaveReviewCommand(reviewId));
+                       .expectDispatchedCommands(new SaveReviewCommand(reviewId, true));
     
         sagaTestFixture.givenAggregate(reviewId)
                        .published(new ReviewAddingRequested(reviewId, content, placeId, userId, photoIds))
                        .whenAggregate(placeId)
                        .publishes(new ReviewIsFirstOnPlace(placeId, reviewId))
                        .expectAssociationWith("placeId", placeId)
-                       .expectDispatchedCommands(new SaveReviewCommand(reviewId));
+                       .expectDispatchedCommands(new SaveReviewCommand(reviewId, true));
     }
-    
 }
