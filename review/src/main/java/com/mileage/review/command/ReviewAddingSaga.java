@@ -51,6 +51,7 @@ public class ReviewAddingSaga {
     public void on(ReviewIsFirstOnPlace event) {
         this.firstOnPlaceProcessed = true;
         log.debug("handling event: {}", event);
+        String reviewId = event.getReviewId();
         if (!reviewSaved) {
             SaveReviewCommand command = SaveReviewCommand.builder().reviewId(reviewId).build();
             commandGateway.send(command);
