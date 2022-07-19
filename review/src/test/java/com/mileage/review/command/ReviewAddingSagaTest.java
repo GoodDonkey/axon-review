@@ -1,7 +1,7 @@
 package com.mileage.review.command;
 
-import com.mileage.core.events.ReviewAddingRequested;
-import com.mileage.core.events.ReviewIsFirstOnPlace;
+import com.mileage.core.events.review.ReviewAddingRequested;
+import com.mileage.core.events.review.ReviewIsFirstOnPlace;
 import com.mileage.core.events.place.PlaceCreated;
 import com.mileage.review.aggregate.Review;
 import org.axonframework.test.aggregate.AggregateTestFixture;

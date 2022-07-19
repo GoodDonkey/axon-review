@@ -1,6 +1,6 @@
 package com.mileage.reviewquery.projection;
 
-import com.mileage.core.events.ReviewSaved;
+import com.mileage.core.events.review.ReviewSaved;
 import com.mileage.reviewquery.entity.Place;
 import com.mileage.reviewquery.entity.Review;
 import com.mileage.reviewquery.entity.User;

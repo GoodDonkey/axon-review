@@ -1,4 +1,4 @@
-package com.mileage.core.events;
+package com.mileage.core.events.review;
 
 import lombok.*;
 

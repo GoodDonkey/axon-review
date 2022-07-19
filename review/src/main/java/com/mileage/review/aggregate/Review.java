@@ -1,9 +1,9 @@
 package com.mileage.review.aggregate;
 
-import com.mileage.core.events.ReviewAddingRequested;
-import com.mileage.core.events.ReviewIsFirstOnPlace;
-import com.mileage.core.events.ReviewModified;
-import com.mileage.core.events.ReviewSaved;
+import com.mileage.core.events.review.ReviewAddingRequested;
+import com.mileage.core.events.review.ReviewIsFirstOnPlace;
+import com.mileage.core.events.review.ReviewModified;
+import com.mileage.core.events.review.ReviewSaved;
 import com.mileage.review.command.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

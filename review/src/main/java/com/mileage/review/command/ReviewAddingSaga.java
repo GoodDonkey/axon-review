@@ -1,8 +1,8 @@
 package com.mileage.review.command;
 
-import com.mileage.core.events.ReviewAddingRequested;
-import com.mileage.core.events.ReviewIsFirstOnPlace;
-import com.mileage.core.events.ReviewSaved;
+import com.mileage.core.events.review.ReviewAddingRequested;
+import com.mileage.core.events.review.ReviewIsFirstOnPlace;
+import com.mileage.core.events.review.ReviewSaved;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.EndSaga;

@@ -1,6 +1,6 @@
 package com.mileage.place;
 
-import com.mileage.core.events.ReviewIsFirstOnPlace;
+import com.mileage.core.events.review.ReviewIsFirstOnPlace;
 import com.mileage.core.events.place.PlaceCreated;
 import com.mileage.review.command.CheckReviewIsFirstOnPlaceCommand;
 import lombok.AccessLevel;

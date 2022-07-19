@@ -1,4 +1,4 @@
-package com.mileage.core.events;
+package com.mileage.core.events.review;
 
 import lombok.*;
 
@@ -8,10 +8,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReviewAddingRequested {
+public class ReviewSaved {
     private String reviewId;
     private String content;
     private String placeId;
     private String userId;
     private List<String> photoIds;
+    private boolean isFirstOnPlace;
 }
