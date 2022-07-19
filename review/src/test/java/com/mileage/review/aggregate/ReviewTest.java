@@ -46,9 +46,10 @@ class ReviewTest {
         ReviewAddingRequested reviewAddingRequested = ReviewAddingRequested.builder().reviewId(reviewId).content(content)
                                                            .placeId(placeId).userId(userId).photoIds(photoIds).build();
     
-        SaveReviewCommand saveReviewCommand = SaveReviewCommand.builder().reviewId(reviewId).build();
+        SaveReviewCommand saveReviewCommand = SaveReviewCommand.builder().reviewId(reviewId).isFirstOnPlace(true).build();
     
-        ReviewSaved reviewSaved = ReviewSaved.builder().reviewId(reviewId).build();
+        ReviewSaved reviewSaved = ReviewSaved.builder().reviewId(reviewId).userId(userId)
+                                          .content(content).photoIds(photoIds).placeId(placeId).isFirstOnPlace(true).build();
         testFixture.given(reviewAddingRequested)
                    .when(saveReviewCommand)
                    .expectSuccessfulHandlerExecution()

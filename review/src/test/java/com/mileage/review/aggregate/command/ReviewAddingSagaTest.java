@@ -3,6 +3,7 @@ package com.mileage.review.aggregate.command;
 import com.mileage.core.events.review.ReviewAddingRequested;
 import com.mileage.core.events.review.ReviewIsFirstOnPlace;
 import com.mileage.core.events.place.PlaceCreated;
+import com.mileage.place.aggregate.command.AddReviewOnPlaceCommand;
 import com.mileage.review.aggregate.Review;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
@@ -47,13 +48,15 @@ class ReviewAddingSagaTest {
                        .whenAggregate(placeId)
                        .publishes(new ReviewIsFirstOnPlace(placeId, reviewId))
                        .expectAssociationWith("placeId", placeId)
-                       .expectDispatchedCommands(new SaveReviewCommand(reviewId, true));
+                       .expectDispatchedCommands(new SaveReviewCommand(reviewId, true),
+                                                 new AddReviewOnPlaceCommand(placeId, reviewId));
     
         sagaTestFixture.givenAggregate(reviewId)
                        .published(new ReviewAddingRequested(reviewId, content, placeId, userId, photoIds))
                        .whenAggregate(placeId)
                        .publishes(new ReviewIsFirstOnPlace(placeId, reviewId))
                        .expectAssociationWith("placeId", placeId)
-                       .expectDispatchedCommands(new SaveReviewCommand(reviewId, true));
+                       .expectDispatchedCommands(new SaveReviewCommand(reviewId, true),
+                                                 new AddReviewOnPlaceCommand(placeId, reviewId));
     }
 }
