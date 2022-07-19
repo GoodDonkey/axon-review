@@ -75,7 +75,7 @@ public class Review {
         log.debug("handling command: {}", command);
         if (ReviewStatus.Processing.equals(this.reviewStatus)) {
             ReviewSaved event = ReviewSaved.builder()
-                                           .reviewId(command.getReviewId())
+                                           .reviewId(reviewId)
                                            .content(content)
                                            .placeId(placeId)
                                            .userId(userId)
