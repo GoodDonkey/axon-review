@@ -1,4 +1,4 @@
-package com.mileage.place;
+package com.mileage.place.aggregate.command;
 
 import lombok.*;
 import org.axonframework.modelling.command.TargetAggregateIdentifier;

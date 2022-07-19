@@ -1,5 +1,6 @@
-package com.mileage.place;
+package com.mileage.place.web;
 
+import com.mileage.place.service.PlaceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;

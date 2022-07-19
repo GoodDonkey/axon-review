@@ -1,4 +1,4 @@
-package com.mileage.place;
+package com.mileage.place.aggregate.command;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

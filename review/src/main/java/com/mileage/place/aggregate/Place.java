@@ -1,10 +1,11 @@
-package com.mileage.place;
+package com.mileage.place.aggregate;
 
 import com.mileage.core.events.place.ReviewAddedOnPlace;
 import com.mileage.core.events.review.ReviewIsFirstOnPlace;
 import com.mileage.core.events.place.PlaceCreated;
 import com.mileage.core.events.review.ReviewIsNotFirstOnPlace;
-import com.mileage.core.events.review.ReviewSaved;
+import com.mileage.place.aggregate.command.AddReviewOnPlaceCommand;
+import com.mileage.place.aggregate.command.CreatePlaceCommand;
 import com.mileage.review.command.CheckReviewIsFirstOnPlaceCommand;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

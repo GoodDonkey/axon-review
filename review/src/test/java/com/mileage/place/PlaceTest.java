@@ -1,6 +1,8 @@
 package com.mileage.place;
 
 import com.mileage.core.events.place.PlaceCreated;
+import com.mileage.place.aggregate.Place;
+import com.mileage.place.aggregate.command.CreatePlaceCommand;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.junit.jupiter.api.DisplayName;

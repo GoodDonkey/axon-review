@@ -1,4 +1,4 @@
-package com.mileage.place;
+package com.mileage.place.service;
 
 import java.util.concurrent.CompletableFuture;
 

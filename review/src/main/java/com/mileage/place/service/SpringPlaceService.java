@@ -1,5 +1,6 @@
-package com.mileage.place;
+package com.mileage.place.service;
 
+import com.mileage.place.aggregate.command.CreatePlaceCommand;
 import lombok.RequiredArgsConstructor;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.stereotype.Service;

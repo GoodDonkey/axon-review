@@ -4,7 +4,7 @@ import com.mileage.core.events.review.ReviewAddingRequested;
 import com.mileage.core.events.review.ReviewIsFirstOnPlace;
 import com.mileage.core.events.review.ReviewIsNotFirstOnPlace;
 import com.mileage.core.events.review.ReviewSaved;
-import com.mileage.place.AddReviewOnPlaceCommand;
+import com.mileage.place.aggregate.command.AddReviewOnPlaceCommand;
 import lombok.extern.slf4j.Slf4j;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.modelling.saga.EndSaga;
