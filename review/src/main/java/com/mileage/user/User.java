@@ -1,5 +1,6 @@
 package com.mileage.user;
 
+import com.mileage.core.events.user.UserCreated;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

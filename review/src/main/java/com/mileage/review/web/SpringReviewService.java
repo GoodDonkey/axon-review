@@ -1,6 +1,5 @@
 package com.mileage.review.web;
 
-import com.mileage.place.CreatePlaceCommand;
 import com.mileage.review.command.AddReviewCommand;
 import com.mileage.review.command.DeleteReviewCommand;
 import com.mileage.review.command.ModifyReviewCommand;
@@ -39,8 +38,6 @@ public class SpringReviewService implements ReviewService{
         String userId = dto.getUserId();
         List<String> photoIds = dto.getAttachedPhotoIds();
         
-        // 임시로 처리
-        commandGateway.sendAndWait(new CreatePlaceCommand(placeId));
         AddReviewCommand command = AddReviewCommand.builder()
                                                    .reviewId(reviewId)
                                                    .content(content)
