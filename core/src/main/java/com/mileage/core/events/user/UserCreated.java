@@ -1,4 +1,4 @@
-package com.mileage.place;
+package com.mileage.core.events.user;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Data
-public class PlaceCreated {
-    private String placeId;
+public class UserCreated {
+    private String userId;
 }
